@@ -20,6 +20,12 @@ services:
         networks:
             - laragigs
 
+    certbot:
+        image: certbot/certbot
+        container_name: certbot
+        networks:
+            - laragigs
+
     database:
         image: postgres:14.5-alpine
         container_name: database
@@ -58,7 +64,9 @@ services:
             - laragigs
 
     npm:
-        image: node:16-alpine
+        build:
+            context: ./dockerfiles
+            dockerfile: npm.dockerfile
         container_name: npm
         ports:
             - 3000:3000
