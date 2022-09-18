@@ -1,0 +1,87 @@
+version: '3.8'
+
+networks:
+    laragigs:
+
+
+services:
+    nginx:
+        build:
+            context: ./dockerfiles
+            dockerfile: nginx.dockerfile
+        container_name: nginx
+        ports:
+            - 8088:80
+        volumes:
+            - ./:/var/www/html
+        depends_on:
+            - php
+            - database
+        networks:
+            - laragigs
+
+    database:
+        image: postgres:14.5-alpine
+        container_name: database
+        restart: unless-stopped
+        ports:
+            - 5432:5432
+        environment:
+            - POSTGRES_DB=postgres
+            - POSTGRES_USER=postgres
+            - POSTGRES_PASSWORD=postgres
+        volumes:
+            - db-data:/var/lib/postgresql/data
+        networks:
+            - laragigs
+
+    php:
+        build:
+            context: ./dockerfiles
+            dockerfile: php.dockerfile
+        container_name: php
+        volumes:
+            - ./:/var/www/html
+        networks:
+            - laragigs
+
+    composer:
+        image: composer:2.4.1
+        container_name: composer
+        depends_on:
+            - php
+        working_dir: /var/www/html
+        entrypoint: [ 'composer' ]
+        volumes:
+            - .:/var/www/html
+        networks:
+            - laragigs
+
+    npm:
+        image: node:16-alpine
+        container_name: npm
+        ports:
+            - 3000:3000
+            - 3001:3001
+        working_dir: /var/www/html
+        entrypoint: [ 'npm' ]
+        volumes:
+            - .:/var/www/html
+        networks:
+            - laragigs
+
+    artisan:
+        build:
+            context: ./dockerfiles
+            dockerfile: php.dockerfile
+        container_name: artisan
+        depends_on:
+            - database
+        volumes:
+            - .:/var/www/html
+        entrypoint: [ 'php', '/var/www/html/artisan' ]
+        networks:
+            - laragigs
+
+volumes:
+    db-data:
