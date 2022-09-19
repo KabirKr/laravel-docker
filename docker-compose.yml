@@ -62,7 +62,6 @@ services:
             - .:/var/www/html
         networks:
             - laragigs
-
     # node:
     #     build:
     #         context: ./dockerfiles
@@ -78,18 +77,18 @@ services:
     #     networks:
     #         - laragigs
 
-    artisan:
-        build:
-            context: ./dockerfiles
-            dockerfile: php.dockerfile
-        container_name: artisan
-        depends_on:
-            - database
-        volumes:
-            - .:/var/www/html
-        entrypoint: [ 'php', '/var/www/html/artisan' ]
-        networks:
-            - laragigs
+    # artisan:
+    #     build:
+    #         context: ./dockerfiles
+    #         dockerfile: php.dockerfile
+    #     container_name: artisan
+    #     depends_on:
+    #         - database
+    #     volumes:
+    #         - .:/var/www/html
+    #     entrypoint: [ 'php', '/var/www/html/artisan' ]
+    #     networks:
+    #         - laragigs
 
 volumes:
     db-data:
