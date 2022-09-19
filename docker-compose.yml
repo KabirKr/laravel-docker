@@ -63,20 +63,20 @@ services:
         networks:
             - laragigs
 
-    node:
-        build:
-            context: ./dockerfiles
-            dockerfile: node.dockerfile
-        container_name: node
-        ports:
-            - 3000:3000
-            - 3001:3001
-        working_dir: /var/www/html
-        entrypoint: [ 'npm' ]
-        volumes:
-            - .:/var/www/html
-        networks:
-            - laragigs
+    # node:
+    #     build:
+    #         context: ./dockerfiles
+    #         dockerfile: node.dockerfile
+    #     container_name: node
+    #     ports:
+    #         - 3000:3000
+    #         - 3001:3001
+    #     working_dir: /var/www/html
+    #     entrypoint: [ 'npm' ]
+    #     volumes:
+    #         - .:/var/www/html
+    #     networks:
+    #         - laragigs
 
     artisan:
         build:
