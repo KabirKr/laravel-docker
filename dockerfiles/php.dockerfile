@@ -6,6 +6,8 @@ RUN mkdir -p /var/www/html
 
 WORKDIR /var/www/html
 
+COPY . .
+
 RUN apt-get update \
     && apt-get install -y libpq-dev \
     && docker-php-ext-install pdo pdo_pgsql \
@@ -13,7 +15,4 @@ RUN apt-get update \
     && apt-get update \
     && apt-get install -y nodejs \
     && npm install -g npm@latest
-
-
-COPY . .
 

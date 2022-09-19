@@ -52,13 +52,6 @@ GRANT ALL PRIVILEGES ON DATABASE <databasename> TO <username>;
 
 Exit out.
 
-### Install npm dependencies and build assets
-
-```
-docker-compose run --rm npm install
-docker-compose run --rm npm run prod
-```
-
 ## Install composer dependecies
 
 ```
@@ -70,7 +63,7 @@ docker-compose run --rm  composer install
 ### Go inside the php container
 
 ```
-docker-compose exec -it php sh
+docker exec -it php sh
 ```
 
 Copy .env.example to .env and set up proper ENV variables
